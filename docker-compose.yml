@@ -1,0 +1,39 @@
+version: "3.7"
+
+volumes:
+  db_volume:
+
+services:
+  postgres:
+    image: postgres:15.2
+    container_name: bnt-postgres
+    ports:
+      - "5433:5432"
+    user: postgres
+    environment:
+      POSTGRES_PASSWORD: bnt_site_pass
+    volumes:
+      - db_volume:/var/lib/postgresql/data
+      - ./docker/postgresql/dev-init-db.sh:/docker-entrypoint-initdb.d/dev-init-db.sh
+
+  php-fpm:
+    build:
+      context: .
+      dockerfile: ./docker/php-fpm/Dockerfile
+    container_name: bnt-php-fpm
+    user: root
+    privileged: true
+    volumes:
+      - ./backend:/var/www:delegated
+
+  nginx:
+    image: nginx:1.23.3
+    container_name: bnt-nginx
+    ports:
+      - "8081:80"
+    volumes:
+      - ./backend:/var/www
+      - ./docker/nginx/conf/default.conf:/etc/nginx/conf.d/default.conf
+      - ./docker/nginx/conf/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - php-fpm
