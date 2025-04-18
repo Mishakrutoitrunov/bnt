@@ -1,0 +1,11 @@
+public:
+  resource:
+    path: ../../src/User/Controller/Public
+    namespace: App\User\Controller\Public
+  type: attribute
+
+private:
+  resource:
+    path: ../../src/User/Controller/Private
+    namespace: App\User\Controller\Private
+  type: attribute

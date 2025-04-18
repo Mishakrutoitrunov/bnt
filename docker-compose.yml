@@ -23,6 +23,8 @@ services:
     container_name: bnt-php-fpm
     user: root
     privileged: true
+    environment:
+      PHP_IDE_CONFIG: "serverName=localhost"
     volumes:
       - ./backend:/var/www:delegated
 

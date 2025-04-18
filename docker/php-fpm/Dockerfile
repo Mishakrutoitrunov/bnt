@@ -20,6 +20,11 @@ RUN docker-php-ext-install \
         pdo_pgsql \
         pgsql
 
+RUN pecl install xdebug
+RUN docker-php-ext-enable xdebug
+
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+COPY docker/php-fpm/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 CMD ["php-fpm"]

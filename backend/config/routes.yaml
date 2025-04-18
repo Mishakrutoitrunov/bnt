@@ -1,5 +1,7 @@
-controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
+user:
+    resource: ./routes/user.yml
+    prefix: /user
+
+admin:
+    resource: ./routes/admin.yml
+    prefix: /admin
